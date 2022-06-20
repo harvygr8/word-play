@@ -11,7 +11,7 @@ input:-webkit-autofill:active{
 
 @layer utilities {
   .custom-height{
-    height: 550px;
+    height: 650px;
   }
 
 }

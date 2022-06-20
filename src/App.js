@@ -1,13 +1,18 @@
 import {useState , useEffect} from 'react';
 import SearchBar from './SearchBar';
 import DefinitionView from './DefinitionView';
+import ExampleView from './ExampleView';
+import AudioPlayer from './AudioPlayer';
 
 function App() {
 
 
   const [search , setSearch] = useState(null);
   const [phonetic , setPhonetic] = useState(null);
+  const [audioUrl , setAudioUrl] = useState(null);
   const [apidata , setApidata] = useState([]);
+  const [examples , setExamples] = useState([]);
+  const [canShowExample , setCanShowExample] = useState(false);
   const [meanings , setMeanings] = useState([]);
   const [related , setRelated] = useState([]);
   const [definitions , setDefinitions] = useState([]);
@@ -42,6 +47,16 @@ function App() {
     });
   }
 
+  const iterateOverExamples = (definitions) =>{
+    definitions.map((meanings)=>{
+      meanings.map((mn)=>{
+        setExamples(data=>
+          [...data,mn.example]);
+          // console.log(mn.definition);
+      })
+    });
+  }
+
   const iterateOverRelated = (definitions) =>{
     definitions.map((meanings)=>{
       setDefinitions(data=>
@@ -49,11 +64,27 @@ function App() {
     });
   }
 
+  const checkExampleArr=(examples)=>{
+    let count=0;
+    for(let s of examples){
+      if(typeof s == 'undefined'){
+        count++;
+      }
+    }
+    if(count!==examples.length){
+      //console.log("YES!");
+      setCanShowExample(true);
+    }
+  }
+
   //executes everytime search query is updated , since setSearch is async and its messy to use callback with setState , lets use useEffect
     useEffect(() => {
       setApidata([]);
       setMeanings([]);
+      setExamples([]);
       setDefinitions([]);
+      setAudioUrl(null);
+      setCanShowExample(false);
 
       if(search!==null){
         console.log(search);
@@ -65,6 +96,8 @@ function App() {
     if(apidata.length>0){
       console.log(apidata[0].meanings);
       setPhonetic(apidata[0].phonetic);
+      console.log(apidata[0].phonetics[0].audio);
+      setAudioUrl(apidata[0].phonetics[0].audio)
       iterateOverMeanings(apidata[0].meanings);
    };
    },[apidata]);
@@ -73,8 +106,18 @@ function App() {
      if(meanings.length>0){
       console.log(meanings);
       iterateOverDefinitons(meanings);
+      iterateOverExamples(meanings);
     };
   },[meanings]);
+
+  useEffect(() => {
+     console.log(examples);
+     checkExampleArr(examples);
+ },[examples]);
+
+ useEffect(()=>{
+   console.log("CAN SHOW EX:"+ canShowExample);
+ },[canShowExample])
 
   useEffect(() => {
     if(definitions.length>0){
@@ -127,16 +170,33 @@ function App() {
         }
 
           {meanings.length>0 &&
-          <div className = "max-h-fit md:custom-height overflow-y-scroll bg-white w-11/12 md:w-8/12 mt-8 md:mt-24 border border-1 shadow-lg rounded-md mb-24">
-            <div className="m-4 flex flex-row justify-items-center">
-              <h1 className="text-xl md:text-4xl">{search}</h1>
-              <h1 className="ml-4 text-xl md:text-4xl">{phonetic}</h1>
+          <div className = "max-h-fit md:max-h-fit bg-white w-11/12 md:w-8/12 mt-8 md:mt-12 border border-1 shadow-lg rounded-md mb-12">
+            <div className="m-4 flex flex-row justify-between">
+
+              <div className="flex flex-row justify-items-center">
+                <h1 className="text-xl md:text-4xl">{search}</h1>
+                <h1 className="ml-4 text-xl md:text-4xl text-blue-500">{phonetic}</h1>
+              </div>
+
+              {audioUrl &&
+              <div className="flex flex-row justify-items-center">
+                <AudioPlayer url={audioUrl}/>
+              </div>
+              }
+
             </div>
             <hr/>
-            <h2 className="m-4 text-2xl underline"> Definitions </h2>
+            <h2 className="m-4 text-2xl rounded-md text-blue-500"> Definitions </h2>
             <DefinitionView meaningList = {meanings}/>
+            {canShowExample==true &&
+              <div className="mt-2">
+                <h2 className="m-4 text-2xl text-blue-500"> Sentence Examples</h2>
+                <ExampleView meaningList = {meanings}/>
+              </div>
+            }
           </div>
         }
+
 
         </div>
       </div>
