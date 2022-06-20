@@ -5,7 +5,9 @@ const AudioPlayer = ({url}) =>{
   );
 
   const start = () => {
+    if(url){
       audio.play();
+    }
   };
 
   return(

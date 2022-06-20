@@ -173,9 +173,9 @@ function App() {
           <div className = "max-h-fit md:max-h-fit bg-white w-11/12 md:w-8/12 mt-8 md:mt-12 border border-1 shadow-lg rounded-md mb-12">
             <div className="m-4 flex flex-row justify-between">
 
-              <div className="flex flex-row justify-items-center">
-                <h1 className="text-xl md:text-4xl">{search}</h1>
-                <h1 className="ml-4 text-xl md:text-4xl text-blue-500">{phonetic}</h1>
+              <div className="flex flex-row items-center">
+                <h1 className="text-2xl md:text-4xl">{search}</h1>
+                <h1 className="ml-4 text-2xl md:text-4xl text-blue-500">{phonetic}</h1>
               </div>
 
               {audioUrl &&
