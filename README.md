@@ -1,5 +1,5 @@
 # WordPlay
- Dictionary App made with React and tailwindCSS + Hero Icons
+ Dictionary App made with React and tailwindCSS + Hero Icons\
  [Check out the app live!](http://wordplayace.netlify.app)
 
  ![](img/show1.png)
