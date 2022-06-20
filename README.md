@@ -1,7 +1,7 @@
 # WordPlay
  Dictionary App made with React and tailwindCSS
 
- ![](img/show2.png)
+ ![](img/show1.png)
 
 # About
   WordPlay is a React powered Web app that gives you definitions of any english word using the Free Dictionary API.
