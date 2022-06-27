@@ -2,7 +2,7 @@
  Dictionary App made with React and tailwindCSS + Hero Icons\
  [Check out the app live!](http://wordplayace.netlify.app)
 
- ![](img/show1.png)
+ ![](img/show2.png)
 
 # About
   WordPlay is a React powered Web app that gives you definitions of any english word using the [Free Dictionary API](https://dictionaryapi.dev/).
@@ -18,3 +18,6 @@
    ```sh
    npm start
    ```
+
+# Attributions
+  Icons used are from [Hero Icons](https://heroicons.com/) and [Game Icons](https://game-icons.net/)
